@@ -73,7 +73,7 @@ public class LexiNode {
 	
 	/**
 	 * Get the current value of the Representative_letter property. 
-	 * @return Value of Representative_letter property
+	 * @return Value of Representative_letter property.
 	 */
 	public char getRepresentative_letter(){
 		return representative_letter;
@@ -81,7 +81,7 @@ public class LexiNode {
 	
 	/**
 	 * Get the current value of the Current_word property. 
-	 * @return Value of Current_word property
+	 * @return Value of Current_word property.
 	 */
 	public String getCurrent_word(){
 		return current_word;
@@ -89,20 +89,21 @@ public class LexiNode {
 	
 	/**
 	 * Get the current value of the Definition property. 
-	 * @return Value of Definition property
+	 * @return Value of Definition property.
 	 */
 	public String getDefinition(){
 		return definition;
 	}
 	
 	/**
-	 * 
-	 * @return
+	 * Get the current values of the Childs ArrayList.
+	 * @return Values of the Childs ArrayList.
 	 */
 	public ArrayList<LexiNode> getChilds(){
 		return childs;
 	}
 	
+	//For testing purposes
 	public static void main(String[] args) {
 		LexiNode dictionnaire = new LexiNode();
 		dictionnaire.add_word("bien", "une definition");
