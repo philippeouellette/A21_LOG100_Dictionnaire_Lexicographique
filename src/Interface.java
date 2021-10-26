@@ -184,6 +184,10 @@ public class Interface extends JFrame {
 		result_word.setBounds(5, 94, 228, 127);
 		contentPane.add(result_word);
 		
+		JTextArea def_word = new JTextArea();
+		def_word.setBounds(241, 45, 269, 177);
+		contentPane.add(def_word);
+		
 		search_bar = new JTextField();
 		search_bar.setBounds(5, 45, 228, 38);
 		contentPane.add(search_bar);
@@ -194,21 +198,49 @@ public class Interface extends JFrame {
 		search_bar.addKeyListener(new KeyListener() {
 			public void keyReleased(KeyEvent e) {
 				
-				String[] words = new String[]{};
-				
-				result_word.selectAll();
-				result_word.replaceSelection("");
-				
-	
-				searchWord = search_bar.getText();
+				try {
 					
-				words = dictionnaire.search_words(searchWord).split(",");
+					String[] words = new String[]{};
 					
-				if(words.length != 0) {
-					for(int i=0; i<words.length;i++) {
-						result_word.append(words[i] +"\n");
+					result_word.selectAll();
+					result_word.replaceSelection("");
+					
+		
+					searchWord = search_bar.getText();
+					
+					if(dictionnaire.search_words(searchWord).indexOf("-") != -1) {
+						words = dictionnaire.search_words(searchWord).split("-");
 					}
+						
+					
+					if(words.length != 0) {
+						for(int i=0; i<words.length;i++) {
+							
+							
+							
+							
+							
+							if(words[i].indexOf(" & ") != -1) {
+								def_word.selectAll();
+								def_word.replaceSelection("");
+								
+								result_word.append(words[i].split(" & ")[0] +"\n");
+								def_word.append(words[i].split(" & ")[1]);
+							}else {
+								
+								
+								
+								result_word.append(words[i] +"\n");
+							}
+							
+						}
+					}
+					
+				}catch(StringIndexOutOfBoundsException indexException) {
+					
 				}
+				
+				
 				
 			}
 
@@ -223,9 +255,7 @@ public class Interface extends JFrame {
 			}
 		});
 		
-		JTextArea def_word = new JTextArea();
-		def_word.setBounds(241, 45, 269, 177);
-		contentPane.add(def_word);
+		
 		
 		
 	}
