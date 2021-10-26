@@ -1,8 +1,6 @@
 import java.util.ArrayList;
 import java.util.jar.JarException;
 
-import com.sun.java.swing.plaf.motif.resources.motif;
-
 /**
  * Class representing the nodes of the lexicographic tree.
  * @author philippe.ouellette
@@ -83,12 +81,12 @@ public class LexiNode {
 	 * @param Word the word we're searching. 
 	 * @return Returns the full current_word if found, an empty string otherwise.
 	 */
-	public String search_word(String word){
+	public String search_words(String word){
 		String found_words = "";
 		//We try to find the word within our childs
 		for(LexiNode child: childs)
 			if(word.charAt(0) == child.getRepresentative_letter())
-				found_words += child.search_word(word, 0);
+				found_words += child.search_words(word, 0);
 		
 		return found_words;
 	}
@@ -101,26 +99,54 @@ public class LexiNode {
 	 * @param Index the index of the string that represents the letter we're looking for. 
 	 * @return Returns the full current_word if found, an empty string otherwise.
 	 */
-	private String search_word(String word, int index){
+	private String search_words(String word, int index){
 		String found_words = "";
 		int local_index = index +1;
 		//We try to find the word within our childs
 		for(LexiNode child: childs){
-			System.out.println("_______________________\n");
-			System.out.println(local_index);
-			System.out.println(word.length());
-			if(local_index < word.length())
-				System.out.println(word.charAt(local_index));
-			System.out.println(child.getRepresentative_letter());
 			if(local_index > word.length()-1 || word.charAt(local_index) == child.getRepresentative_letter())
-				found_words += child.search_word(word, local_index);
+				found_words += child.search_words(word, local_index);
 		}
-		if(current_word != null && found_words != null)
-				return found_words +"," + current_word;
-		else if(current_word != null && found_words == null)
-			return current_word;
+		if(current_word != null && !found_words.equals(""))
+			return current_word == word ? current_word +"&" + definition + "," + found_words +"," : current_word + "," + found_words +",";
+		else if(current_word != null && found_words.equals(""))
+			return current_word == word ? current_word +"&" + definition + ",": current_word+ ",";
 		else //current_word == null && found_words != null
 			return found_words;
+	}
+	
+	/**
+	 * Tries to search the received word. If it can't be found,
+	 * we add it as it's a new word. If it's found, we edit the
+	 * definition received.
+	 * @param word the word to either add or to edit the definition.
+	 * @param definition The definition to edit if the word exists.
+	 */
+	public void edit_word(String word, String definition){
+		LexiNode node = search_specific_word(current_word, -1);
+		if(node == null)
+			add_word(word, definition);
+		else
+			search_specific_word(current_word, -1).setDefinition(definition);
+	}
+	
+	/**
+	 * Recursively travel the letters of the word received
+	 * in parameter and returns it if found.
+	 * @param word the word we're looking for.
+	 * @param index index of the word representing the letter and the node.
+	 * @return the node containing the word we're looking for. Null if not found. 
+	 */
+	private LexiNode search_specific_word(String word, int index){
+		int local_index = index + 1;
+		//if we found the word, we make the change
+		if(word.equals(this.current_word))
+			return this;
+		//We try to find the word within our childs
+		for(LexiNode child: childs)
+			if(word.charAt(local_index) == child.getRepresentative_letter())
+				child.search_specific_word(current_word, local_index);
+		return null;
 	}
 	
 	/**
@@ -132,11 +158,29 @@ public class LexiNode {
 	}
 	
 	/**
+	 * Set the representative_letter of the current value with 
+	 * the received value
+	 * @param representative_letter new representative_letter.
+	 */
+	public void SetRepresentative_letter(char representative_letter){
+		this.representative_letter = representative_letter;
+	}
+	
+	/**
 	 * Get the current value of the Current_word property. 
 	 * @return Value of Current_word property.
 	 */
 	public String getCurrent_word(){
 		return current_word;
+	}
+	
+	/**
+	 * Set the current_word of the current value with 
+	 * the received value
+	 * @param current_word new current_word.
+	 */
+	public void setCurrent_word(String current_word){
+		this.current_word = current_word;
 	}
 	
 	/**
@@ -148,26 +192,19 @@ public class LexiNode {
 	}
 	
 	/**
+	 * Set the definition of the current value with 
+	 * the received value 
+	 * @param definition new definition.
+	 */
+	public void setDefinition(String definition){
+		this.definition = definition;
+	}
+	
+	/**
 	 * Get the current values of the Childs ArrayList.
 	 * @return Values of the Childs ArrayList.
 	 */
 	public ArrayList<LexiNode> getChilds(){
 		return childs;
-	}
-	
-	//For testing purposes
-	public static void main(String[] args) {
-		System.out.println("Starting main ...");
-		LexiNode dictionnaire = new LexiNode();
-		dictionnaire.add_word("bien", "une definition");
-		dictionnaire.add_word("boreal", "une definition");
-		dictionnaire.add_word("bon", "une definition");
-		dictionnaire.add_word("bonne", "une definition");
-		dictionnaire.add_word("bebe", "une definition");
-		dictionnaire.add_word("blanc", "une definition");
-		ArrayList<LexiNode> childs =  dictionnaire.getChilds();
-		System.out.println(childs.size());
-		System.out.println("\n\n Found the word: " + dictionnaire.search_word("b"));
-		System.out.println("Finishing main ...");
 	}
 }

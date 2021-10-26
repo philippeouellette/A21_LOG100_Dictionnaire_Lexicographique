@@ -1,5 +1,3 @@
-package dico;
-
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.Dimension;
@@ -79,7 +77,7 @@ public class Interface extends JFrame {
 		
 		
 		
-		JList list = new JList();
+		final JList list = new JList();
 		
 		
 		
@@ -106,7 +104,7 @@ public class Interface extends JFrame {
 						
 						
 
-						String[] wordTab = new String[fichier.getWords().size()];
+						final String[] wordTab = new String[fichier.getWords().size()];
 						
 						for(int i=0;i<fichier.getWords().size();i++) {
 							wordTab[i] = fichier.getWords().get(i);
