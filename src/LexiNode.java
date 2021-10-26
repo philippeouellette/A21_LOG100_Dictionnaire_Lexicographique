@@ -123,7 +123,7 @@ public class LexiNode {
 	 * @param definition The definition to edit if the word exists.
 	 */
 	public void edit_word(String word, String definition){
-		LexiNode node = search_specific_word(current_word, -1);
+		LexiNode node = search_specific_word(word, -1);
 		if(node == null)
 			add_word(word, definition);
 		else
