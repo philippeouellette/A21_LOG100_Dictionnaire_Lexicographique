@@ -137,9 +137,7 @@ public class Interface extends JFrame {
 		contentPane.add(btnNewButton_1);
 		
 		
-		JButton btnNewButton = new JButton("Ajouter/Modifier");
-		btnNewButton.setBounds(0, 233, 695, 23);
-		contentPane.add(btnNewButton);
+		
 		
 		
 		list.setBounds(520, 45, 165, 177);
@@ -255,7 +253,14 @@ public class Interface extends JFrame {
 			}
 		});
 		
-		
+		JButton btnNewButton = new JButton("Ajouter/Modifier");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dictionnaire.edit_word(searchWord, def_word.getText());
+			}
+		});
+		btnNewButton.setBounds(0, 233, 695, 23);
+		contentPane.add(btnNewButton);
 		
 		
 	}
