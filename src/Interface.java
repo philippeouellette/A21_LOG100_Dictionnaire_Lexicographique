@@ -194,32 +194,32 @@ public class Interface extends JFrame {
 		search_bar.addKeyListener(new KeyListener() {
 			public void keyReleased(KeyEvent e) {
 				
+				String[] words = new String[]{};
 				
+				result_word.selectAll();
+				result_word.replaceSelection("");
 				
-				if(e.getKeyCode() != 8) {
-					//System.out.print(searchWord.length() + "\n");
+	
+				searchWord = search_bar.getText();
 					
+				words = dictionnaire.search_words(searchWord).split(",");
 					
-					searchWord += String.valueOf(e.getKeyChar());
-					
-					System.out.print(dictionnaire.search_words(searchWord));
-					System.out.print("\n------------------" + searchWord + "\n");
-					
-					
-				}else if(e.getKeyCode() == 8 && searchWord != null && searchWord.length() > 0) {
-					searchWord = searchWord.substring(0, searchWord.length() - 1);
+				if(words.length != 0) {
+					for(int i=0; i<words.length;i++) {
+						result_word.append(words[i] +"\n");
+					}
 				}
 				
 			}
 
 			@Override
 			public void keyTyped(KeyEvent e) {
-				//System.out.print("\n" + e.getKeyChar() );
+				//nothing here
 			}
 
 			@Override
 			public void keyPressed(KeyEvent e) {
-				//System.out.print("\n" + e.getKeyChar() );
+				//nothing here
 			}
 		});
 		
