@@ -139,6 +139,7 @@ public class LexiNode {
 	 * @return the node containing the word we're looking for. Null if not found. 
 	 */
 	private LexiNode search_specific_word(String word, int index){
+		if(current_word != null && !current_word.isEmpty()){
 		int local_index = index + 1;
 		//if we found the word, we make the change
 		if(current_word != null && 
@@ -149,23 +150,24 @@ public class LexiNode {
 		for(LexiNode child: childs)
 			if(word.toLowerCase().charAt(local_index) == Character.toLowerCase(child.getRepresentative_letter()))
 				return child.search_specific_word(word, local_index);
+		}
 		return null;
 	}
 	
 	/**
-	 * Return every word present in the lexinode tree.
-	 * @return a string containing all words.
+	 * Return every word present in the lexinode tree + their definition.
+	 * @return a string containing all words + their definition.
 	 */
-	public String get_all_words(){
+	public String get_all_words_and_definitions(){
 		String found_words = "";
 		//We try to find the word within our childs
 		for(LexiNode child: childs){
-				found_words += child.get_all_words();
+				found_words += child.get_all_words_and_definitions();
 		}
 		if(current_word != null && !found_words.equals(""))
-			return current_word + "-" + found_words +"-";
+			return current_word +" & " + definition + "-" + found_words +"-" ;
 		else if(current_word != null && found_words.equals(""))
-			return current_word+ "-";
+			return current_word +" & " + definition + "-";
 		else //current_word == null && found_words != null
 			return found_words;
 	}

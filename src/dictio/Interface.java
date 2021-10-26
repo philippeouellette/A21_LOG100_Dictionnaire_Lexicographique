@@ -66,7 +66,7 @@ public class Interface extends JFrame {
 		JScrollPane scrollPane = new JScrollPane();
 		
 		
-		JList list = new JList();
+		final JList list = new JList();
 		
 		
 		
@@ -93,7 +93,7 @@ public class Interface extends JFrame {
 						
 						
 
-						String[] wordTab = new String[fichier.getWords().size()];
+						final String[] wordTab = new String[fichier.getWords().size()];
 						
 						
 						for(int i=0;i<fichier.getWords().size();i++) {
@@ -178,11 +178,11 @@ public class Interface extends JFrame {
 		contentPane.add(btnNewButton_2);
 		
 		
-		JTextArea result_word = new JTextArea();
+		final JTextArea result_word = new JTextArea();
 		result_word.setBounds(5, 94, 228, 127);
 		contentPane.add(result_word);
 		
-		JTextArea def_word = new JTextArea();
+		final JTextArea def_word = new JTextArea();
 		def_word.setBounds(241, 45, 269, 177);
 		contentPane.add(def_word);
 		
