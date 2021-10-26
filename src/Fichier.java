@@ -1,20 +1,27 @@
+package dico;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class Fichier {
 	
-	public String readFile;
+	private String readFile;
 	
 	public Fichier(String file) {
 		this.readFile = file;
+		//System.out.print(file);
+	}
+	
+	public String getReadFile() {
+		return this.readFile;
 	}
 	
 	public List<String> getSentence(){
 		
 		List<String> listSentence = new ArrayList<String>();
 		String file = readFile;
-		String[] wordsTab = file.split("--");
+		String[] wordsTab = file.split("\n");
 		
 		for(int i=0;i<wordsTab.length;i++) {
 			listSentence.add(wordsTab[i]);
@@ -56,6 +63,8 @@ public class Fichier {
 		return listDef;
 		
 	}
+	
+	
 	
 
 	public static void main(String[] args) {

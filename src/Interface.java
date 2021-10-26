@@ -1,10 +1,8 @@
-import java.awt.BorderLayout;
-import java.awt.Container;
-import java.awt.Dimension;
+package dico;
+
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JButton;
@@ -13,25 +11,27 @@ import javax.swing.JFileChooser;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.FileWriter;
 import java.util.Scanner;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
 import javax.swing.JList;
 import javax.swing.JTextArea;
 import javax.swing.AbstractListModel;
-import javax.swing.JSpinner;
-import javax.swing.JComboBox;
-import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
-import javax.swing.ListSelectionModel;
+
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 public class Interface extends JFrame {
 	
 	private String data = "";
 	private JPanel contentPane;
 	private JTextField search_bar;
+	private String searchWord = "";
+	Fichier fichier;
+	LexiNode dictionnaire = new LexiNode();
+	FileWriter fw;
 
 	/**
 	 * Launch the application.
@@ -66,18 +66,7 @@ public class Interface extends JFrame {
 		JScrollPane scrollPane = new JScrollPane();
 		
 		
-		
-		
-		
-		
-		
-		JButton btnNewButton = new JButton("Ajouter/Modifier");
-		btnNewButton.setBounds(0, 233, 695, 23);
-		contentPane.add(btnNewButton);
-		
-		
-		
-		final JList list = new JList();
+		JList list = new JList();
 		
 		
 		
@@ -95,26 +84,27 @@ public class Interface extends JFrame {
 						Scanner readFile = new Scanner(file, "UTF-8");
 						while(readFile.hasNextLine()) {
 							data += readFile.nextLine();
-							data += "--";
+							data += "\n";
 							
 						}
 						
 						
-						Fichier fichier = new Fichier(data);
+						fichier = new Fichier(data);
 						
 						
 
-						final String[] wordTab = new String[fichier.getWords().size()];
+						String[] wordTab = new String[fichier.getWords().size()];
+						
 						
 						for(int i=0;i<fichier.getWords().size();i++) {
 							wordTab[i] = fichier.getWords().get(i);
+							dictionnaire.add_word(fichier.getWords().get(i), fichier.getDef().get(i));
 						}
 						
 						
 						
 						list.setModel(new AbstractListModel() {
 							
-							//String[] values = wordTab;
 							String[] values = wordTab;
 							
 							public int getSize() {
@@ -126,7 +116,9 @@ public class Interface extends JFrame {
 						});
 						
 						
-
+						
+						
+						//System.out.print(dictionnaire.search_word("Test"));
 						
 						readFile.close();
 						
@@ -145,7 +137,9 @@ public class Interface extends JFrame {
 		contentPane.add(btnNewButton_1);
 		
 		
-		
+		JButton btnNewButton = new JButton("Ajouter/Modifier");
+		btnNewButton.setBounds(0, 233, 695, 23);
+		contentPane.add(btnNewButton);
 		
 		
 		list.setBounds(520, 45, 165, 177);
@@ -159,23 +153,80 @@ public class Interface extends JFrame {
 		JButton btnNewButton_2 = new JButton("Enregistrer");
 		btnNewButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				try {
+					
+					JFileChooser fileChooserSave = new JFileChooser();
+					int reponse = fileChooserSave.showSaveDialog(null);
+					
+					if(reponse == JFileChooser.APPROVE_OPTION) {
+						File fileToSave = fileChooserSave.getSelectedFile();
+						String path = fileToSave.getAbsolutePath().replace("\\", "/");
+						
+						fw = new FileWriter(path);
+						fw.write(fichier.getReadFile());
+						fw.close();
+					}
+					
+					
+					
+					
+					
+				}catch(Exception exc) {
+					
+				}
 			}
 		});
 		btnNewButton_2.setBounds(372, 11, 109, 23);
 		contentPane.add(btnNewButton_2);
+		
+		
+		JTextArea result_word = new JTextArea();
+		result_word.setBounds(5, 94, 228, 127);
+		contentPane.add(result_word);
 		
 		search_bar = new JTextField();
 		search_bar.setBounds(5, 45, 228, 38);
 		contentPane.add(search_bar);
 		search_bar.setColumns(10);
 		
+		
+		
+		search_bar.addKeyListener(new KeyListener() {
+			public void keyReleased(KeyEvent e) {
+				
+				
+				
+				if(e.getKeyCode() != 8) {
+					//System.out.print(searchWord.length() + "\n");
+					
+					
+					searchWord += String.valueOf(e.getKeyChar());
+					
+					System.out.print(dictionnaire.search_words(searchWord));
+					System.out.print("\n------------------" + searchWord + "\n");
+					
+					
+				}else if(e.getKeyCode() == 8 && searchWord != null && searchWord.length() > 0) {
+					searchWord = searchWord.substring(0, searchWord.length() - 1);
+				}
+				
+			}
+
+			@Override
+			public void keyTyped(KeyEvent e) {
+				//System.out.print("\n" + e.getKeyChar() );
+			}
+
+			@Override
+			public void keyPressed(KeyEvent e) {
+				//System.out.print("\n" + e.getKeyChar() );
+			}
+		});
+		
 		JTextArea def_word = new JTextArea();
 		def_word.setBounds(241, 45, 269, 177);
 		contentPane.add(def_word);
 		
-		JTextArea reuslt_word = new JTextArea();
-		reuslt_word.setBounds(5, 94, 228, 127);
-		contentPane.add(reuslt_word);
+		
 	}
 }
