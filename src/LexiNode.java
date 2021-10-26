@@ -50,7 +50,7 @@ public class LexiNode {
 		//If we already have a child with that representative_letter, we
 		//send the rest of the word to him.
 		for(LexiNode child: childs){
-			if(subword.charAt(1) == child.getRepresentative_letter()){
+			if(subword.length() > 1 && subword.charAt(1) == child.getRepresentative_letter()){
 				child.add_word(word, definition, subword.substring(1));
 				child_has_been_added = true;
 			}
@@ -85,7 +85,7 @@ public class LexiNode {
 		String found_words = "";
 		//We try to find the word within our childs
 		for(LexiNode child: childs)
-			if(word.charAt(0) == child.getRepresentative_letter())
+			if(word.toLowerCase().charAt(0) == Character.toLowerCase(child.getRepresentative_letter()))
 				found_words += child.search_words(word, 0);
 		
 		return found_words;
@@ -104,13 +104,13 @@ public class LexiNode {
 		int local_index = index +1;
 		//We try to find the word within our childs
 		for(LexiNode child: childs){
-			if(local_index > word.length()-1 || word.charAt(local_index) == child.getRepresentative_letter())
+			if(local_index > word.length()-1 || word.toLowerCase().charAt(local_index) == Character.toLowerCase(child.getRepresentative_letter()))
 				found_words += child.search_words(word, local_index);
 		}
 		if(current_word != null && !found_words.equals(""))
-			return current_word == word ? current_word +"&" + definition + "," + found_words +"," : current_word + "," + found_words +",";
+			return current_word.toLowerCase().equals(word.toLowerCase()) ? current_word +"&" + definition + "," + found_words +"," : current_word + "," + found_words +",";
 		else if(current_word != null && found_words.equals(""))
-			return current_word == word ? current_word +"&" + definition + ",": current_word+ ",";
+			return current_word.toLowerCase().equals(word.toLowerCase()) ? current_word +"&" + definition + ",": current_word+ ",";
 		else //current_word == null && found_words != null
 			return found_words;
 	}
