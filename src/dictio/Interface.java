@@ -1,4 +1,4 @@
-package dico;
+package dictio;
 
 import java.awt.EventQueue;
 

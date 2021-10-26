@@ -1,4 +1,4 @@
-package dico;
+package dictio;
 
 import java.util.ArrayList;
 import java.util.jar.JarException;
@@ -57,7 +57,6 @@ public class LexiNode {
 				child_has_been_added = true;
 			}
 		}
-		//TODO we have to somehow skip this part if we added a child
 		if(!child_has_been_added){
 			if(subword.length() > 1){
 				LexiNode child = new LexiNode();

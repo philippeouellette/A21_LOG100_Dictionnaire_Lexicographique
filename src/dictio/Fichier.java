@@ -1,4 +1,4 @@
-package dico;
+package dictio;
 
 import java.util.ArrayList;
 import java.util.Arrays;
