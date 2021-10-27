@@ -65,7 +65,8 @@ public class Interface extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JScrollPane scrollPane = new JScrollPane();
+		JScrollPane scrollPaneList = new JScrollPane();
+		JScrollPane scrollPaneDef = new JScrollPane();
 		
 		
 		JList list = new JList();
@@ -135,12 +136,12 @@ public class Interface extends JFrame {
 		btnNewButton_1.setBounds(251, 11, 107, 23);
 		contentPane.add(btnNewButton_1);
 		
-		list.setBounds(520, 45, 165, 177);
+		list.setBounds(575, 45, 115, 177);
 		contentPane.add(list);
 		
-		scrollPane.setViewportView(list);
-		scrollPane.setBounds(520, 45, 165, 177);
-		contentPane.add(scrollPane);
+		scrollPaneList.setViewportView(list);
+		scrollPaneList.setBounds(575, 45, 115, 177);
+		contentPane.add(scrollPaneList);
 		
 		
 		JButton btnNewButton_2 = new JButton("Enregistrer");
@@ -172,15 +173,19 @@ public class Interface extends JFrame {
 		
 		
 		JTextArea result_word = new JTextArea();
-		result_word.setBounds(5, 94, 228, 127);
+		result_word.setBounds(5, 94, 160, 127);
 		contentPane.add(result_word);
 		
 		JTextArea def_word = new JTextArea();
-		def_word.setBounds(241, 45, 269, 177);
+		def_word.setBounds(175, 45, 390, 177);
 		contentPane.add(def_word);
 		
+		scrollPaneDef.setViewportView(def_word);
+		scrollPaneDef.setBounds(175, 45, 390, 177);
+		contentPane.add(scrollPaneDef);
+		
 		search_bar = new JTextField();
-		search_bar.setBounds(5, 45, 228, 38);
+		search_bar.setBounds(5, 45, 160, 38);
 		contentPane.add(search_bar);
 		search_bar.setColumns(10);
 		
@@ -212,7 +217,9 @@ public class Interface extends JFrame {
 								def_word.replaceSelection("");
 								
 								result_word.append(words[i].split(" & ")[0] +"\n");
+								
 								def_word.append(words[i].split(" & ")[1]);
+								
 							}else if(e.getKeyCode() == 8) {
 								def_word.selectAll();
 								def_word.replaceSelection("");
