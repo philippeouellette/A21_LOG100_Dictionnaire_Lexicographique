@@ -108,6 +108,8 @@ public class LexiNode {
 			if(local_index > word.length()-1 || word.toLowerCase().charAt(local_index) == Character.toLowerCase(child.getRepresentative_letter()))
 				found_words += child.search_words(word, local_index);
 		}
+		if(current_word != null && word.length() > current_word.length())
+			return found_words;
 		if(current_word != null && !found_words.equals(""))
 			return current_word.toLowerCase().equals(word.toLowerCase()) ? current_word +" & " + definition + "§" + found_words +"§" : current_word + "§" + found_words +"§";
 		else if(current_word != null && found_words.equals(""))
