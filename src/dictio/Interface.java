@@ -210,10 +210,10 @@ public class Interface extends JFrame {
 					searchWord = search_bar.getText();
 					
 					/**
-					 * if the content of the sentence contains a "§" separator then split the sentence in two
+					 * if the content of the sentence contains a "#" separator then split the sentence in two
 					 */
-					if(dictionnaire.search_words(searchWord).indexOf("§") != -1) {
-						words = dictionnaire.search_words(searchWord).split("§");
+					if(dictionnaire.search_words(searchWord).indexOf("#") != -1) {
+						words = dictionnaire.search_words(searchWord).split("#");
 					}
 						
 					/**
@@ -276,7 +276,7 @@ public class Interface extends JFrame {
 				
 				dictionnaire.edit_word(searchWord, def_word.getText());
 				
-				wordAddTab = dictionnaire.get_all_words().split("§");
+				wordAddTab = dictionnaire.get_all_words().split("#");
 				
 				list.setModel(new AbstractListModel() {
 					

@@ -111,9 +111,9 @@ public class LexiNode {
 		if(current_word != null && word.length() > current_word.length())
 			return found_words;
 		if(current_word != null && !found_words.equals(""))
-			return current_word.toLowerCase().equals(word.toLowerCase()) ? current_word +" & " + definition + "§" + found_words +"§" : current_word + "§" + found_words;
+			return current_word.toLowerCase().equals(word.toLowerCase()) ? current_word +" & " + definition + "#" + found_words +"#" : current_word + "#" + found_words;
 		else if(current_word != null && found_words.equals(""))
-			return current_word.toLowerCase().equals(word.toLowerCase()) ? current_word +" & " + definition + "§": current_word+ "§";
+			return current_word.toLowerCase().equals(word.toLowerCase()) ? current_word +" & " + definition + "#": current_word+ "#";
 		else //current_word == null && found_words != null
 			return found_words;
 	}
@@ -186,9 +186,9 @@ public class LexiNode {
 				found_words += child.get_all_words();
 		}
 		if(current_word != null && !found_words.equals(""))
-			return current_word + "§" + found_words;
+			return current_word + "#" + found_words;
 		else if(current_word != null && found_words.equals(""))
-			return current_word+ "§";
+			return current_word+ "#";
 		else //current_word == null && found_words != null
 			return found_words;
 	}

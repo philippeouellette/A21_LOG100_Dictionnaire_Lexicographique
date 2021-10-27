@@ -1,4 +1,4 @@
-package dictio;
+package dico;
 
 import static org.junit.Assert.*;
 
@@ -40,10 +40,10 @@ public class LexiNodeTest {
     public void SearchWordsTest0(){
         LexiNode DictionnaryTest = new LexiNode();
 		DictionnaryTest.add_word("test", "a definition for testing purposes");
-        assertEquals("test§", DictionnaryTest.search_words("t"));
-        assertEquals("test§", DictionnaryTest.search_words("te"));
-        assertEquals("test§", DictionnaryTest.search_words("tes"));
-        assertEquals("test & a definition for testing purposes§", DictionnaryTest.search_words("test"));
+        assertEquals("test#", DictionnaryTest.search_words("t"));
+        assertEquals("test#", DictionnaryTest.search_words("te"));
+        assertEquals("test#", DictionnaryTest.search_words("tes"));
+        assertEquals("test & a definition for testing purposes#", DictionnaryTest.search_words("test"));
     }
 
     @Test
@@ -53,15 +53,15 @@ public class LexiNodeTest {
 		DictionnaryTest.add_word("premiermotprime", "a definition for testing purposes");
         DictionnaryTest.add_word("deuxiememot", "a definition for testing purposes");
 
-        assertEquals("premiermot§premiermotprime§", 
+        assertEquals("premiermot#premiermotprime#", 
                      DictionnaryTest.search_words("premier"));
-        assertEquals("premiermot & a definition for testing purposes§premiermotprime§§", 
+        assertEquals("premiermot & a definition for testing purposes#premiermotprime##", 
                       DictionnaryTest.search_words("premiermot"));
-        assertEquals("premiermotprime§", 
+        assertEquals("premiermotprime#", 
                       DictionnaryTest.search_words("premiermotpri"));
-        assertEquals("premiermotprime & a definition for testing purposes§", 
+        assertEquals("premiermotprime & a definition for testing purposes#", 
                       DictionnaryTest.search_words("premiermotprime"));
-        assertEquals("deuxiememot§", DictionnaryTest.search_words("d"));
+        assertEquals("deuxiememot#", DictionnaryTest.search_words("d"));
     }
 
     @Test
@@ -83,9 +83,9 @@ public class LexiNodeTest {
     
         DictionnaryTest.edit_word("pm", "a definition for premiermot but a little different");
 
-        assertEquals("pm§", DictionnaryTest.search_words("p"));
+        assertEquals("pm#", DictionnaryTest.search_words("p"));
         DictionnaryTest.edit_word("pmp", "a definition for premiermot but for the prime version");
-        assertEquals("pm & a definition for premiermot but a little different§pmp§§", DictionnaryTest.search_words("pm"));
+        assertEquals("pm & a definition for premiermot but a little different#pmp##", DictionnaryTest.search_words("pm"));
         assertEquals("a definition for premiermot but for the prime version", 
                       DictionnaryTest.getChilds().get(0).getChilds().get(0).getChilds().get(0).getDefinition());
     }
@@ -99,7 +99,7 @@ public class LexiNodeTest {
 		DictionnaryTest.add_word("ananas", "a definition");
 		DictionnaryTest.add_word("framboise", "a definition");
 
-        assertEquals("pomme§poire§banane§ananas§framboise§", DictionnaryTest.get_all_words());
+        assertEquals("pomme#poire#banane#ananas#framboise#", DictionnaryTest.get_all_words());
     }
 
     @Test
