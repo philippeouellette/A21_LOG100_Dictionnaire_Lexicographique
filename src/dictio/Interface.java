@@ -1,4 +1,4 @@
-package dico;
+package dictio;
 
 import java.awt.EventQueue;
 
@@ -54,7 +54,7 @@ public class Interface extends JFrame {
 		JScrollPane scrollPaneDef = new JScrollPane();
 		
 		
-		JList list = new JList();
+		final JList list = new JList();
 		
 		
 		/**
@@ -93,7 +93,7 @@ public class Interface extends JFrame {
 						/**
 						 * Add list of word in the list in application's window + add word and definition in dictionnaire  
 						 */
-						String[] wordTab = new String[fichier.getWords().size()];
+						final String[] wordTab = new String[fichier.getWords().size()];
 						
 						for(int i=0;i<fichier.getWords().size();i++) {
 							wordTab[i] = fichier.getWords().get(i);
@@ -171,12 +171,12 @@ public class Interface extends JFrame {
 		contentPane.add(btnNewButton_2);
 		
 		
-		JTextArea result_word = new JTextArea();
+		final JTextArea result_word = new JTextArea();
 		result_word.setEditable(false);
 		result_word.setBounds(5, 94, 160, 127);
 		contentPane.add(result_word);
 		
-		JTextArea def_word = new JTextArea();
+		final JTextArea def_word = new JTextArea();
 		def_word.setBounds(175, 45, 390, 177);
 		contentPane.add(def_word);
 		

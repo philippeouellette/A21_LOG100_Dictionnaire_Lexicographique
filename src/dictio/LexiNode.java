@@ -23,7 +23,7 @@ public class LexiNode {
 	public void add_word(String word, String definition){
 		if(word.length() > 1){
 			for(LexiNode child: childs){
-				if(word.charAt(0) == (child.getRepresentative_letter())){
+				if(word.toLowerCase().charAt(0) == Character.toLowerCase(child.getRepresentative_letter())){
 					child.add_word(word, definition, word);
 					//if we found a matching child, we don't wanna create another one
 					return;
@@ -52,7 +52,7 @@ public class LexiNode {
 		//If we already have a child with that representative_letter, we
 		//send the rest of the word to him.
 		for(LexiNode child: childs){
-			if(subword.length() > 1 && subword.charAt(1) == child.getRepresentative_letter()){
+			if(subword.length() > 1 && subword.toLowerCase().charAt(1) == Character.toLowerCase(child.getRepresentative_letter())){
 				child.add_word(word, definition, subword.substring(1));
 				child_has_been_added = true;
 			}
@@ -170,6 +170,25 @@ public class LexiNode {
 			return current_word +" & " + definition + "§" + found_words +"§" ;
 		else if(current_word != null && found_words.equals(""))
 			return current_word +" & " + definition + "§";
+		else //current_word == null && found_words != null
+			return found_words;
+	}
+	
+	
+	/**
+	 * Return every word present in the lexinode tree.
+	 * @return a string containing all words.
+	 */
+	public String get_all_words(){
+		String found_words = "";
+		//We try to find the word within our childs
+		for(LexiNode child: childs){
+				found_words += child.get_all_words();
+		}
+		if(current_word != null && !found_words.equals(""))
+			return current_word + "-" + found_words +"-";
+		else if(current_word != null && found_words.equals(""))
+			return current_word+ "-";
 		else //current_word == null && found_words != null
 			return found_words;
 	}
