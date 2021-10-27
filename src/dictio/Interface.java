@@ -96,7 +96,7 @@ public class Interface extends JFrame {
 						 */
 						String[] wordTab = new String[fichier.getWords().size()];
 						
-						for(int i=0;i<fichier.getWords().size();i++) {
+						for(int i=1;i<fichier.getWords().size();i++) {
 							wordTab[i] = fichier.getWords().get(i);
 							dictionnaire.add_word(fichier.getWords().get(i), fichier.getDef().get(i));
 						}
@@ -222,6 +222,9 @@ public class Interface extends JFrame {
 					if(words.length != 0) {
 						for(int i=0; i<words.length;i++) {
 							
+							/**
+							 * If words contents "&", reset old definition and show new definition
+							 */
 							if(words[i].indexOf(" & ") != -1) {
 								def_word.selectAll();
 								def_word.replaceSelection("");
@@ -230,6 +233,9 @@ public class Interface extends JFrame {
 								
 								def_word.append(words[i].split(" & ")[1]);
 								
+							/**
+							 * If the first string in words has not "&"	or is empty, reset old definition
+							 */
 							}else if(words[0].indexOf(" & ") == -1 || words[0].indexOf("") == -1) {
 								def_word.selectAll();
 								def_word.replaceSelection("");
