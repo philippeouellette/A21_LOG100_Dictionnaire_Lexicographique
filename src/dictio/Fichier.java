@@ -1,22 +1,31 @@
-package dictio;
+package dico;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class Fichier {
+public class Fichier{
 	
 	private String readFile;
 	
 	public Fichier(String file) {
 		this.readFile = file;
-		//System.out.print(file);
 	}
 	
+	
+	
+	/**
+	 * Allows access to readFile
+	 * @return readFile
+	 */
 	public String getReadFile() {
 		return this.readFile;
 	}
 	
+	/**
+	 * Take line per line of file
+	 * @return a list of sentence from the file 
+	 */
 	public List<String> getSentence(){
 		
 		List<String> listSentence = new ArrayList<String>();
@@ -27,14 +36,15 @@ public class Fichier {
 			listSentence.add(wordsTab[i]);
 		}
 		
-		//System.out.print(listSentence);
-		
 		return listSentence;	
 	}
 	
 	
 	
-	
+	/**
+	 * Extract words from their definition with the "&" separator 
+	 * @return list of word
+	 */
 	public List<String> getWords() {
 		
 		List<String> listWord = new ArrayList<String>();
@@ -43,13 +53,15 @@ public class Fichier {
 			listWord.add(getSentence().get(i).split(" & ")[0]);
 		}
 		
-		//System.out.print(listWord);
 		
 		return listWord;
 		
 	}
 	
-	
+	/**
+	 * Extract definition from their word with the "&" separator 
+	 * @return list of definition
+	 */
 	public List<String> getDef() {
 		
 		List<String> listDef = new ArrayList<String>();
@@ -58,18 +70,7 @@ public class Fichier {
 			listDef.add(getSentence().get(i).split(" & ")[1]);
 		}
 		
-		//System.out.print(listDef);
-		
 		return listDef;
 		
 	}
-	
-	
-	
-
-	public static void main(String[] args) {
-		
-
-	}
-
 }
