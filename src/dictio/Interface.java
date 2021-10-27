@@ -230,7 +230,7 @@ public class Interface extends JFrame {
 								
 								def_word.append(words[i].split(" & ")[1]);
 								
-							}else if(e.getKeyCode() == 8) {
+							}else if(words[0].indexOf(" & ") == -1 || words[0].indexOf("") == -1) {
 								def_word.selectAll();
 								def_word.replaceSelection("");
 								
