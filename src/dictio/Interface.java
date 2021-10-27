@@ -35,21 +35,6 @@ public class Interface extends JFrame {
 	LexiNode dictionnaire = new LexiNode();
 	FileWriter fw;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Interface frame = new Interface();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the frame.
@@ -72,16 +57,24 @@ public class Interface extends JFrame {
 		JList list = new JList();
 		
 		
-		
+		/**
+		 * Action when press the button "Charger"
+		 * Allows to select a file in the computer and load a list of words and their definitions. 
+		 */
 		JButton btnNewButton_1 = new JButton("Charger");
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				data = "";
+				/**
+				 * Open a windows for select file in directory
+				 */
 				JFileChooser fileChooser = new JFileChooser();
-				
 				int reponse = fileChooser.showOpenDialog(null);
 				
 				if(reponse == JFileChooser.APPROVE_OPTION) {
+					/**
+					 * Read file line per line
+					 */
 					File file = new File(fileChooser.getSelectedFile().getAbsolutePath());
 					try {
 						Scanner readFile = new Scanner(file, "UTF-8");
@@ -91,20 +84,21 @@ public class Interface extends JFrame {
 							
 						}
 						
-						
+						/**
+						 * Save line per line from file in Fichier
+						 */
 						fichier = new Fichier(data);
 						
 						
-
+						/**
+						 * Add list of word in the list in application's window + add word and definition in dictionnaire  
+						 */
 						String[] wordTab = new String[fichier.getWords().size()];
-						
 						
 						for(int i=0;i<fichier.getWords().size();i++) {
 							wordTab[i] = fichier.getWords().get(i);
 							dictionnaire.add_word(fichier.getWords().get(i), fichier.getDef().get(i));
 						}
-						
-						
 						
 						
 						list.setModel(new AbstractListModel() {
@@ -118,8 +112,6 @@ public class Interface extends JFrame {
 								return values[index];
 							}
 						});
-						
-						//System.out.print(dictionnaire.search_word("Test"));
 						
 						readFile.close();
 						
@@ -143,18 +135,25 @@ public class Interface extends JFrame {
 		scrollPaneList.setBounds(575, 45, 115, 177);
 		contentPane.add(scrollPaneList);
 		
-		
+		/**
+		 * Action when press button "Enregister"
+		 * Allows save the list of word and their definition 
+		 */
 		JButton btnNewButton_2 = new JButton("Enregistrer");
 		btnNewButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				
 				try {
-					
+					/**
+					 * Open windows for choose where save the file
+					 */
 					JFileChooser fileChooserSave = new JFileChooser();
 					int reponse = fileChooserSave.showSaveDialog(null);
 					
 					if(reponse == JFileChooser.APPROVE_OPTION) {
+						/**
+						 * Create file and write in and save
+						 */
 						File fileToSave = fileChooserSave.getSelectedFile();
 						String path = fileToSave.getAbsolutePath().replace("\\", "/");
 						
@@ -173,6 +172,7 @@ public class Interface extends JFrame {
 		
 		
 		JTextArea result_word = new JTextArea();
+		result_word.setEditable(false);
 		result_word.setBounds(5, 94, 160, 127);
 		contentPane.add(result_word);
 		
@@ -190,7 +190,9 @@ public class Interface extends JFrame {
 		search_bar.setColumns(10);
 		
 		
-		
+		/**
+		 * Watch when one touch is pressed in the search bar
+		 */
 		search_bar.addKeyListener(new KeyListener() {
 			public void keyReleased(KeyEvent e) {
 				
@@ -201,14 +203,21 @@ public class Interface extends JFrame {
 					result_word.selectAll();
 					result_word.replaceSelection("");
 					
-		
+					/**
+					 * Take string char in search bar
+					 */
 					searchWord = search_bar.getText();
 					
+					/**
+					 * if the content of the sentence contains a "§" separator then split the sentence in two
+					 */
 					if(dictionnaire.search_words(searchWord).indexOf("§") != -1) {
 						words = dictionnaire.search_words(searchWord).split("§");
 					}
 						
-					
+					/**
+					 * Display the list of potential words and if necessary their definition
+					 */
 					if(words.length != 0) {
 						for(int i=0; i<words.length;i++) {
 							
@@ -248,6 +257,11 @@ public class Interface extends JFrame {
 			}
 		});
 		
+		
+		/**
+		 * Action when press button "Ajouter/Modifier"
+		 * allows add or modify word and their definition
+		 */
 		JButton btnNewButton = new JButton("Ajouter/Modifier");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
